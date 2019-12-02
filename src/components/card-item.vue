@@ -1,5 +1,5 @@
 <template>
-    <div class="card-container" id="curcard" >
+    <div class="card-container" id="curcard" @click="toDetail">
         <el-card shadow="none" @mouseenter.native="overForBtn" @mouseleave.native="outHideBtn">
             <el-col :span="19" class="left-title">
                 <div style="width:85%;">
@@ -22,8 +22,17 @@
                             </span>
                              <span  style="margin-left:5px;font-weight:600;"> {{ commentNum }} </span>
                         </el-button>
+                        <el-button size="small" title='收藏' @click.prevent="collectit">
+                            <span>
+                                <svg-icon :iconClass="[collected?'collected':'collect']" size="0.8" />
+                            </span>
+                             <!-- <span  style="margin-left:5px;font-weight:600;"> {{ commentNum }} </span> -->
+                        </el-button>
+      
                     </el-button-group>
                     <el-button v-show="distateBtn" @click.prevent="closeVisible=true" style="margin-left:20px" type="danger" title="删除"  size="small" icon="el-icon-delete" circle></el-button>
+                   
+
                 </div>
             </el-col>
             <el-col :span="5" class="right-img" >
@@ -46,7 +55,7 @@
 </template>
 
 <script>
-import  { distate,likeNumUpdate,getacclaim }  from '@/api/api'
+import  { distate,likeNumUpdate,getacclaim,collectNews }  from '@/api/api'
     export default {
         props: {
             itemData:{
@@ -81,8 +90,9 @@ import  { distate,likeNumUpdate,getacclaim }  from '@/api/api'
                 liked:false,
                 //点赞 评论
                 acclaimNum: 0,
-                commentNum: 0
-
+                commentNum: 0,
+                //收藏
+                collected: false
             }
         },
         methods: {
@@ -145,7 +155,7 @@ import  { distate,likeNumUpdate,getacclaim }  from '@/api/api'
                         value: type //增 或 减
                     }).then(res => {
                         this.$message({
-                            type:'success',
+                            type:type==-1?'warning':'success',
                             message:type==-1?'取消点赞':'点赞成功',
                             duration:2 * 1000,
                             offset:100
@@ -164,6 +174,40 @@ import  { distate,likeNumUpdate,getacclaim }  from '@/api/api'
                     this.acclaimNum += 1 
                     this.updateLikeNum(1)
                 }
+            },
+            doCollectNews (value) {
+                    collectNews({
+                        newsUniqueKey:this.itemData.uniquekey,
+                        userUniqueKey: this.$store.state.userUniId,
+                        value:value
+                    }).then(data => {   
+                        this.$message({
+                            type:this.collected?'success':'warning',
+                            message:this.collected?'收藏成功':'取消收藏',
+                            duration: 3 * 1000,
+                            offset: 100
+                        })
+                    }).catch(err => {
+                        console.log(err)
+                    })
+            },
+            collectit () {
+                if(this.collected){
+                    this.collected = false
+                    this.doCollectNews(-1)
+                }else{
+                    this.collected = true
+                    this.doCollectNews(1)
+                }                
+               
+            },
+            toDetail () {
+                this.$router.push({
+                    path:'/about',
+                    query:{
+                        newsUrl : this.itemData.url
+                    }
+                })
             }
         },
         created () {

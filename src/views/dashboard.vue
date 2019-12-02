@@ -23,6 +23,7 @@ import request from '@/utils/request'
 import { mapMutations,mapState } from 'vuex'
 let _this
     export default {
+        name:'Dashboard',
         data () {
             return {
                 navList:[

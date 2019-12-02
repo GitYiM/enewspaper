@@ -41,3 +41,20 @@ export function getacclaim (params) {
         params
     })
 }
+
+//收藏文章
+export function collectNews (params) {
+    return request({
+        url: '/news/news/collect',
+        method: 'get',
+        params
+    }) 
+}
+
+//获取文章内容
+export function getHtml (params) {
+    return request({
+        url:params.url,
+        method:'get'
+    })
+}
