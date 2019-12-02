@@ -22,19 +22,19 @@ const routes = [
             path: 'test',
             name:'Test',
             component:Home,
-            meta:{title:'test',keepAlive:true}
+            meta:{title:'test'}
           },
           {
             path: 'headline',
             name: 'Headline',
             component:() => import('@/views/newsList/headlineview' ),
-            meta: { title: 'Headline' ,keepAlive:false}
+            meta: { title: 'Headline' }
           },
           {
             path: 'social',
             name: 'Social',
             component:() => import('@/views/newsList/social'),
-            meta: { title: 'Social' ,keepAlive:false}
+            meta: { title: 'Social' }
           },
           {
             path: 'inland',
@@ -82,7 +82,7 @@ const routes = [
             path: 'science',
             name: 'Science',
             component:() => import('@/views/newsList/science'),
-            meta: { title: 'Science',keepAlive:false }
+            meta: { title: 'Science'}
           }
         ]
       },

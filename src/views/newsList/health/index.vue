@@ -24,6 +24,7 @@ import cardItem from '@/components/card-item.vue'
 import { getOtherNews } from '@/api/api.js'
 let _this
 export default {
+    name:'Health',
     components:{
         cardItem
     },
@@ -47,10 +48,12 @@ export default {
         }
     },
     created () {
-        // _this.$route.meta.keepAlive = true
         _this = this
         _this.forSocialNews()
     },
+    activated () {
+        console.log('health actived')
+    }
 } 
 </script>
 

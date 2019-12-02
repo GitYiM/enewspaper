@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     //userState
-    userUniId:'182961ca-7f08-40f6-95e9-7d80e1087748',
+    userUniId:'ea20f233-f3f5-4106-a3c2-4f5a4feb7b59',
     recommendType:'0',
 
     //viewState

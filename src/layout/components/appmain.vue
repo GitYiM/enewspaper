@@ -1,7 +1,7 @@
 <template>
     <section class="appmain">
         <transition name="fade-transform"  mode="out-in">
-            <router-view  />> 
+            <router-view :key="varkey" />> 
         </transition>
     </section>
 </template>
@@ -9,10 +9,10 @@
 <script>
     export default {
         computed: {
-            key: function () {
-                console.log(this.$route.name)
-                return this.$route.path //page/1 和 page/2的path不同，强制不复用组件,但是这里不行，需要复用第二层menu
-            }
+            varkey: function () {
+                // console.log(_this.$route.path)
+                return this.$store.state.recommendType
+            },
         }
     }
 </script>

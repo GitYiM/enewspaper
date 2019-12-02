@@ -25,6 +25,7 @@ import cardItem from '@/components/card-item.vue'
 import { getHeadlineList,getOtherNews } from '@/api/api.js'
 let _this
 export default {
+    name:'Headline',
     components:{
         cardItem
     },
@@ -50,7 +51,6 @@ export default {
         console.log('headlineCreate')
         _this = this
         _this.forHeadlineNews()
-        // _this.$route.meta.keepAlive = true
     },
     activated () {
         console.log('headline actived')

@@ -8,14 +8,13 @@
             </nav>
         </div>
       <transition name="fade-transform"  mode="out-in">
-          <keep-alive>
-                <router-view v-if="$route.meta.keepAlive" :key="varkey"/>>
+          <keep-alive :include="cacheList">
+                <router-view  />
           </keep-alive>
         </transition>
-        <transition name="fade-transform"  mode="out-in">
+        <!-- <transition name="fade-transform"  mode="out-in">
              <router-view v-if="!$route.meta.keepAlive" :key="varkey"/>>
-        </transition>
-
+        </transition> -->
     </div>
 </template>
 
@@ -68,14 +67,9 @@ let _this
                         clickId:'science'
                     }
                 ],
-                activeId:'headline'
+                activeId:'headline',
+                cacheList:"Headline,Health,Inland,International,Military,Pe,Science,Social,Car,Finance"
             }
-        },
-        computed: {
-            varkey: function () {
-                // console.log(_this.$route.path)
-                return _this.$store.state.recommendType
-            },
         },
         methods:{
            
