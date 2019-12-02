@@ -14,7 +14,7 @@
                             <span>
                                 <svg-icon :iconClass="[liked?'liked':'like']" size="0.75" />
                             </span>
-                            <span :class="[liked||acclaimStatus?'chosed':'']" style="margin-left:5px;font-weight:600;"> {{ acclaimNum }}</span>
+                            <span :class="[liked?'chosed':'']" style="margin-left:5px;font-weight:600;"> {{ acclaimNum }}</span>
                         </el-button>
                         <el-button size="small" title='评论' @click.prevent="">
                             <span>
@@ -50,7 +50,6 @@ import  { distate,likeNumUpdate,getacclaim }  from '@/api/api'
     export default {
         props: {
             itemData:{
-                type:Object,
                 required:true,
                 default: {}
             }
@@ -82,8 +81,8 @@ import  { distate,likeNumUpdate,getacclaim }  from '@/api/api'
                 liked:false,
                 //点赞 评论
                 acclaimNum: 0,
-                commentNum: 0,
-                acclaimStatus: 0
+                commentNum: 0
+
             }
         },
         methods: {
@@ -158,10 +157,11 @@ import  { distate,likeNumUpdate,getacclaim }  from '@/api/api'
             likeit () {
                 if(this.liked){
                     this.liked = false
+                    this.acclaimNum -= 1 
                     this.updateLikeNum(-1)
                 }else{
                     this.liked = true
-                    this.acclaimNum += 1
+                    this.acclaimNum += 1 
                     this.updateLikeNum(1)
                 }
             }
@@ -173,7 +173,8 @@ import  { distate,likeNumUpdate,getacclaim }  from '@/api/api'
             }).then(data => {
                 this.acclaimNum = data.result.data[0].object.acclaimCount
                 this.commentNum = data.result.data[0].object.commentCount
-                this.acclaimStatus =  data.result.data[0].object.acclaimStatus
+                
+                this.liked =  data.result.data[0].object.acclaimStatus == 1?true:false
             }).catch(err => {
                 console.log(err)
             })

@@ -18,7 +18,7 @@ request.interceptors.request.use(config => {
 
 //收到响应的处理
 request.interceptors.response.use(response => {
-    console.log('触发')
+    // console.log('触发')
     let res = response.data
     if(res.error_code!=0){
         Message({

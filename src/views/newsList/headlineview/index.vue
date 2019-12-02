@@ -3,11 +3,14 @@
     <div class="dashboard-main-wrapper">
       <div class="main-container">
           <el-col :span="16" >
-            <div class="left-content-list"  v-loading="loading" element-loading-text="拼命加载中...." element-loading-spinner="el-icon-loading">
+            <div  class="left-content-list"  v-loading="loading" element-loading-text="拼命加载中...." element-loading-spinner="el-icon-loading">
                 <a :class="['cart-item-href']" :href="item.url" v-for="(item,index) in HeadLists" :key="index" target="_blank" >
                     <card-item   :itemData="item" class="card-item"></card-item>
                 </a>
             </div>
+            <!-- <div v-show="nomore" style="height:4rem; width:100%;"> 
+                <span style="line-height:4rem">没有更多新闻了......</span>
+            </div> -->
           </el-col>
           <el-col :span="8">
                 <div class="right-extra-content">
@@ -23,6 +26,8 @@
 <script>
 import cardItem from '@/components/card-item.vue'
 import { getHeadlineList,getOtherNews } from '@/api/api.js'
+import { throttle } from '@/utils/throttle.js'
+import listLoad from '@/utils/listLoad.js'
 let _this
 export default {
     name:'Headline',
@@ -32,7 +37,8 @@ export default {
     data () {
         return {
             HeadLists:[],
-            loading:true
+            loading:true,
+            nomore:false
         }
     },
     methods: {
@@ -45,12 +51,38 @@ export default {
                 _this.HeadLists = res.result.data
                 _this.loading = false
             })
+        },
+        loadMore: function () {
+            getHeadlineList({
+                userUniqueKey: _this.$store.state.userUniId,
+                recommendType: _this.$store.state.recommendType
+            })
+            .then(res => {
+                if(res.result.data.length == 0 ){
+                    _this.nomore = true
+                }
+                _this.HeadLists.push(...res.result.data)
+            })
         }
     },
     created () {
         console.log('headlineCreate')
         _this = this
         _this.forHeadlineNews()
+       listLoad.listenScroll(_this.loadMore)
+       // window.addEventListener('scroll',throttle(function() {
+        //     let fromTopHeight = document.body.scrollTop || document.documentElement.scrollTop 
+        //     let viewHeight = document.documentElement.clientHeight || document.body.clientHeight
+        //     let totalHeight = document.documentElement.scrollHeight || document.body.scrollHeight
+        //     console.log('from:' + fromTopHeight+ 'viewH:'+viewHeight+ 'total:'+ totalHeight)
+        //     if(fromTopHeight+viewHeight == totalHeight){
+        //         _this.loadMore()
+        //         console.log('加载更多')
+        //     }else{
+        //         console.log('条件不满足')
+        //     }
+        //     console.log('监听')
+        // },300))
     },
     activated () {
         console.log('headline actived')

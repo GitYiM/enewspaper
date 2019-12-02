@@ -22,6 +22,8 @@
 <script>
 import cardItem from '@/components/card-item.vue'
 import { getOtherNews } from '@/api/api.js'
+import { throttle } from '@/utils/throttle.js'
+import listLoad from '@/utils/listLoad.js'
 let _this
 export default {
     name:'Health',
@@ -45,11 +47,25 @@ export default {
                 _this.HeadLists = res.result.data
                 _this.loading = false
             }) 
+        },
+         loadMore: function () {
+            getOtherNews({
+                type: 'jiankang',
+                userUniqueKey: _this.$store.state.userUniId,
+                recommendType: _this.$store.state.recommendType
+            })
+            .then(res => {
+                if(res.result.data.length == 0 ){
+                    _this.nomore = true
+                }
+                _this.HeadLists.push(...res.result.data)
+            })
         }
     },
     created () {
         _this = this
         _this.forSocialNews()
+         listLoad.listenScroll(_this.loadMore)
     },
     activated () {
         console.log('health actived')
