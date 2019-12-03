@@ -1,19 +1,22 @@
 <template>
   <div id="app"> 
      <transition name="fade-transform"  mode="out-in">
-    <keep-alive >
-      <router-view exclude="about"/>
-    </keep-alive>
+      <keep-alive :exclude="excludeList"  >
+        <router-view />
+      </keep-alive>
     </transition>
-     <!-- <transition name="fade-transform"  mode="out-in">
-         <router-view  v-if="!$route.meta.keepAlive"/>
-      </transition> -->
+
   </div>
 </template>
 
 <script>
 let _this;
 export default {
+  data () {
+    return {
+      excludeList: "About"
+    }
+  },
    watch:{
     $route(to,from){ 
       console.log('route is changing')

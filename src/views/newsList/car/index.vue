@@ -4,9 +4,7 @@
       <div class="main-container">
           <el-col :span="16">
             <div class="left-content-list" v-loading="loading" element-loading-text="拼命加载中...." element-loading-spinner="el-icon-loading">
-                <a :class="['cart-item-href']" :href="item.url" v-for="(item,index) in HeadLists" :key="index" target="_blank" >
-                    <card-item   :itemData="item" class="card-item"></card-item>
-                </a>
+                <card-item  :href="item.url" v-for="(item,index) in HeadLists" :key="index" :itemData="item" class="card-item"></card-item>
             </div>
           </el-col>
           <el-col :span="8">
