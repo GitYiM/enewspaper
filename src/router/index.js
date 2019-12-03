@@ -111,7 +111,18 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  scrollBehavior: ()=>({y:0}),
+  scrollBehavior(to,from,savedPosition){
+    // if (to.name !='About') {
+    //   return  savedPosition
+    // }
+    // // // 异步滚动操作
+    // // return new Promise((resolve) => {
+    // //   setTimeout(() => {
+    // //     resolve({ x: 0, y: 1 });
+    // //   }, 0);
+    // // })
+    return  {y:0}
+  },
   routes
 })
 

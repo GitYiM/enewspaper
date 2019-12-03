@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { stat } from 'fs'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     //userState
-    userUniId:'a74cdac5-037d-423f-8747-ebb0cf6b205b',
+    userUniId:'3d9a5604-9c0f-414e-8b4b-767535a70f28',
     recommendType:'0',
 
     //viewState

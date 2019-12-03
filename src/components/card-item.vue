@@ -10,19 +10,19 @@
                 </div>
                 <div class="operation" style="margin-top:20px;">
                     <el-button-group>
-                        <el-button  size="small" title="点赞" state="false" @click.prevent="likeit">
+                        <el-button  size="small" title="点赞" state="false" @click.stop.prevent="likeit">
                             <span>
                                 <svg-icon :iconClass="[liked?'liked':'like']" size="0.75" />
                             </span>
                             <span :class="[liked?'chosed':'']" style="margin-left:5px;font-weight:600;"> {{ acclaimNum }}</span>
                         </el-button>
-                        <el-button size="small" title='评论' @click.prevent="">
+                        <el-button size="small" title='评论' @click.stop.prevent="">
                             <span>
                                 <svg-icon iconClass="comment" size="0.8" />
                             </span>
                              <span  style="margin-left:5px;font-weight:600;"> {{ commentNum }} </span>
                         </el-button>
-                        <el-button size="small" title='收藏' @click.prevent="collectit">
+                        <el-button size="small" title='收藏' @click.stop.prevent="collectit">
                             <span>
                                 <svg-icon :iconClass="[collected?'collected':'collect']" size="0.8" />
                             </span>
@@ -30,7 +30,7 @@
                         </el-button>
       
                     </el-button-group>
-                    <el-button v-show="distateBtn" @click.prevent="closeVisible=true" style="margin-left:20px" type="danger" title="删除"  size="small" icon="el-icon-delete" circle></el-button>
+                    <el-button v-show="distateBtn" @click.stop.prevent="closeVisible=true" style="margin-left:20px" type="danger" title="删除"  size="small" icon="el-icon-delete" circle></el-button>
                    
 
                 </div>
@@ -205,7 +205,8 @@ import  { distate,likeNumUpdate,getacclaim,collectNews }  from '@/api/api'
                 this.$router.push({
                     path:'/about',
                     query:{
-                        newsUrl : this.itemData.url
+                        newsUrl : this.itemData.url,
+                        newsId: this.itemData.uniquekey
                     }
                 })
             }
