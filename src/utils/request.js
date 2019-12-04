@@ -4,7 +4,7 @@ import Message from 'element-ui'
 
 const request = axios.create({
     baseURL:process.env.VUE_APP_BASE_API, //url = baseurl + apiurl
-    timeout: 5000    
+    timeout: 10000    
 })
 
 //发送请求前处理

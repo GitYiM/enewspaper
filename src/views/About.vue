@@ -39,28 +39,17 @@
         </div>
       </div>
       <div class="comment-list">
-        <!-- <div class="comment-list-item">
-              <div class="item-avatar-box">
-                  <el-avatar shape="circle" :size="30" src="@/assets/logo.png"></el-avatar>
-              </div>
-              <div class="item-content-box">
-                  <div class="meta-box">GitYiM</div>
-                  <div class="content-box">`"useBuiltIns": "usage"` 有时候会不起作用 有时候会不起作用 有时候会不起作用 有时候会不起作用 有时候会不起作用 有时候会不起作用，很奇怪</div>
-                  <div class="oper-box">
-                    <time>31分钟前</time>
-                    <div class="operation">
-                       <span @click="likeit">
-                        <svg-icon :iconClass="[liked?'liked':'like']" size="0.2" />
-                        <span style="margin-left:10px;">0</span>
-                       </span>
-                    </div>
-                  </div>
-                  <div class="split-line"></div>
-              </div>
-        </div>-->
-        <reply-item v-for="(item,index) in replyList" :replyInfo="item.object" :key="index"></reply-item>
+        <reply-item v-for="item in replyList" :replyInfo="item.object" :key="item.object.comment_unique_key"></reply-item>
       </div>
     </div>
+    <!-- 滑倒顶部 -->
+    <el-button
+        style="color:blue"
+        :class="['float-button',toTopBtn?'top':'']"
+        circle
+        icon="el-icon-caret-top"
+        @click.native="toTop"
+      ></el-button>
   </div>
 </template>
 <script>
@@ -76,6 +65,7 @@ export default {
   },
   data() {
     return {
+      toTopBtn: false, //滑倒顶部按钮 变量
       message: "",
       newsUrl: "",
       newsId: "",
@@ -103,7 +93,7 @@ export default {
       //
       this.sendLoading = true
       //假操作 用于增强用户体验
-      const commentId =  md5(this.$store.state.userUniId + utils.getCurTime())
+      const commentId =  md5(this.$store.state.userUniId + utils.getCurTime()+Math.random())
       const curTime = utils.getCurTime()  
        //请求到后台添加评论
         addComment({
@@ -116,27 +106,30 @@ export default {
           ip: "192.186.53.7"
         })
           .then(res => {
-              this.replyList.unshift(
-              {
-                object: {
-                  name: "来自火星的网友",
-                  content: this.commentValue,
-                  commentTime: curTime,
-                  acclaimCount:0,
-                  acclaimStatus:0,
-                  comment_unique_key:commentId
-                }
-              }
-            ),
-            console.log(res);
+            this.getComments()
+           
+            //   this.replyList.unshift(
+            //   {
+            //     object: {
+            //       name: "来自火星的网友",
+            //       content: this.commentValue,
+            //       commentTime: curTime,
+            //       acclaimCount:0,
+            //       acclaimStatus:0,
+            //       comment_unique_key:commentId
+            //     }
+            //   }
+            // ),
             this.commentValue = "";
             this.$message({
               type: "success",
               message: "评论成功",
               duration: 3 * 1000
             });
+            this.sendLoading = false
+            //重新获取评论内容
+            
           })
-          this.sendLoading = false
           .catch(err => {
             this.$message({
               type: "error",
@@ -153,6 +146,7 @@ export default {
       })
         .then(res => {
           this.replyList = res.result.data.slice(1)
+           this.$forceUpdate()//强制更新
         })
         .catch(err => {
           console.log(err)
@@ -183,7 +177,30 @@ export default {
         .finally(dd => {
           fullLoading.close();
         });
-    }
+    },
+    getFromTop() {
+      let fromTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      if (fromTop >= 100) {
+        this.toTopBtn = true;
+      } else {
+        this.toTopBtn = false;
+      }
+    },
+    toTop() {
+        let mode =
+          document.compatMode === "CSS1Compat" ? "documentElement" : "body";
+        let fromTop = document[mode].scrollTop;
+        // 回到顶部滚动条滑动的速度应该和高度有关
+        let speed = Math.round(fromTop / 20);
+        let timer = setInterval(function() {
+          document[mode].scrollTop -= speed;
+          if (document[mode].scrollTop <= 0) {
+            clearInterval(timer);
+            timer = null;
+          }
+        }, 10);
+      }
   },
   created() {
     this.newsUrl = this.$route.query.newsUrl;
@@ -191,16 +208,18 @@ export default {
     this.articleLoad();
     this.getComments();
   },
-  mounted() {
-    // const html =  document.getElementsByTagName('html')[0]
-    // html.style.backgroundColor = '#00000000'
-  }
+
+    mounted() {
+      window.addEventListener("scroll", this.getFromTop, false);
+    }
+
 };
 </script>
 
 <style lang="scss" scoped>
 @import "~@/styles/mixin.scss";
 .comment-container {
+  min-height: 300px;
   position: relative;
   .title {
     color: #8a9aa9;
@@ -240,47 +259,22 @@ export default {
     display: flex;
     flex-direction: column;
     @include clearfix;
-    // height: 2rem;
-    // .comment-list-item{
-    //   display: flex;
-    //   .item-avatar-box{
-    //     flex: 0 0 auto;
-    //     .el-avatar{
-    //       margin-right: 10px;
-    //     }
-    //   }
-    //   .item-content-box{
-    //     flex:1 1 auto;
-    //     position: relative;
-    //     height: 50px;
-    //     .meta-box{
-    //       text-align: start;
-    //     }
-    //     .content-box{
-    //       margin-top: 10px;
-    //       text-align: start;
-    //     }
-    //     .oper-box{
-    //       display: flex;
-    //       margin: 20px 0 15px 0;
-    //       color: #8a9aa9;
-    //       font-weight: 400;
-    //       .operation{
-    //         margin-left: auto;
-    //         width: 50px;
-    //         display: flex;
-    //         justify-content: space-between;
-    //       }
-    //     }
-    //     .split-line{
-    //       margin: 15px 0 ;
-    //       padding: .5px 0;
-    //       background-color: rgb(244, 245, 245);
-    //     }
-    //   }
-    // }
+    
   }
+  
 }
+.float-button {
+      position: fixed;
+      right: 100px;
+      bottom: -50px;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
+      transition: all .3s linear 0s;
+      opacity: .8;
+    }
+    .top{
+      bottom: 100px;
+      opacity: 1;
+    }
 </style>
 <style lang="scss">
 </style>

@@ -1,6 +1,6 @@
 export function throttle (fn, timeout=300) {
     let canRun = true
-    return function() {
+    return function listen() {
         if(!canRun){
             return
         }

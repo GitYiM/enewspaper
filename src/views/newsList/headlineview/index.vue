@@ -84,8 +84,14 @@ export default {
     },
     activated () {
         console.log('headline actived')
+        listLoad.listenScroll(_this.loadMore)
         // _this.forHeadlineNews()
+    },
+    deactivated () {
+        console.log('不活跃')
+        // listLoad.removeListenScroll(_this.loadMore)
     }
+    
 }
 </script>
 

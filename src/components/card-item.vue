@@ -16,7 +16,7 @@
                             </span>
                             <span :class="[liked?'chosed':'']" style="margin-left:5px;font-weight:600;"> {{ acclaimNum }}</span>
                         </el-button>
-                        <el-button size="small" title='评论' @click.stop.prevent="">
+                        <el-button size="small" title='评论' @click.stop.prevent="toComment">
                             <span>
                                 <svg-icon iconClass="comment" size="0.8" />
                             </span>
@@ -118,7 +118,7 @@ import  { distate,likeNumUpdate,getacclaim,collectNews }  from '@/api/api'
                         offset:100
                     })
                     this.destroyElement();
-                    console.log(data)
+
                 }).catch(err => {
                     console.log(err)
                 })
@@ -129,11 +129,11 @@ import  { distate,likeNumUpdate,getacclaim,collectNews }  from '@/api/api'
                     this.feedReasons =  this.feedReasons.filter(item=>{
                        return item!=reason.content
                     })
-                    console.log(this.feedReasons)
+        
                 }else{
                     reason.clicked = true
                     this.feedReasons.push(reason.content)
-                    console.log(this.feedReasons)
+                
                 }
             },
             feedBackBtnReset() {
@@ -212,6 +212,7 @@ import  { distate,likeNumUpdate,getacclaim,collectNews }  from '@/api/api'
             }
         },
         created () {
+            window.onscroll = null
             getacclaim ({
                 newsUniqueKey:this.itemData.uniquekey,
                 userUniqueKey:this.$store.state.userUniId
@@ -225,7 +226,7 @@ import  { distate,likeNumUpdate,getacclaim,collectNews }  from '@/api/api'
             })
         },
         mounted () {
-            console.log(this.itemData)
+            // console.log(this.itemData)
         }
     }
 </script>
