@@ -10,8 +10,8 @@
             <ul class="nav-list">
               <li class="nav-item" @click="toDashboard">首页</li>
               <li class="nav-item" @click="toConnect">联系我们</li>
-              <li class="nav-item" @click="toConnect">我的足迹</li>
-              <li class="nav-item" @click="toConnect">我的收藏</li>
+              <!-- <li class="nav-item" @click="toConnect">我的足迹</li>
+              <li class="nav-item" @click="toConnect">我的收藏</li> -->
               <li class="nav-item mode-chose">
                 模式---
                 <el-dropdown class="mode-menu" size="small">

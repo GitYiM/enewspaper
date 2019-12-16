@@ -31,6 +31,12 @@ const routes = [
             meta: { title: 'Headline' }
           },
           {
+            path: 'agri',
+            name: 'Agri',
+            component:() => import('@/views/newsList/agri' ),
+            meta: { title: 'Agri' }
+          },
+          {
             path: 'social',
             name: 'Social',
             component:() => import('@/views/newsList/social'),
@@ -92,7 +98,12 @@ const routes = [
         component: Home,
         meta: {title:'test'}
       },
-      
+      {
+        path: 'collectView',
+        name:'CollectView',
+        component: () => import('@/views/collectView'),
+        meta: { title:'CollectView' }
+      }
     ]
   },
   {
@@ -110,19 +121,25 @@ const routes = [
   
 ]
 
+
+
+
 const router = new VueRouter({
+  // mode:'history',
   scrollBehavior(to,from,savedPosition){
-    // if (to.name !='About') {
-    //   return  savedPosition
-    // }
-    // // // 异步滚动操作
-    // // return new Promise((resolve) => {
-    // //   setTimeout(() => {
-    // //     resolve({ x: 0, y: 1 });
-    // //   }, 0);
-    // // })
+    if(to.hash =='#comment'){
+      return new Promise(function(resolve,reject){
+        setTimeout(function(){
+          if(document.querySelector('#comment')){
+            resolve({selector:to.hash}) 
+          }
+        },1000)
+      })
+    }
     return  {y:0}
   },
+  // scrollBehavior: (to,from,savedPosition) => ({selector:to.hash}),
+  // scrollBehavior: () => ({ y: 0 }),
   routes
 })
 

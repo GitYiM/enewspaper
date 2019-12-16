@@ -1,23 +1,24 @@
 <template>
   <div>
     <!-- 新闻html -->
-    <div v-html="message"></div>
+    <div  v-html="message"></div>
     <!-- 评论添加部分 -->
-    <div class="comment-container">
-      <div class="title">评论</div>
-      <div class="comment-form">
+    <div  class="comment-container"> 
+      <div class="title" id='comment' >评论</div>
+      <div class="comment-form"  >
         <div class="avatar-box">
           <el-avatar
             shape="circle"
             :size="35"
-            src="http://hbimg.huabanimg.com/f6ee1b095215b8c2955fd07e56e2739b2671cd3579f0d-5feCNB_fw658"
+            :src="headUrl"
           ></el-avatar>
         </div>
-        <div class="form-box">
-          <div class="input-box">
+        <div class="form-box"> 
+          <div class="input-box" >
             <el-input
               ref="commentInput"
               @focus="showBtn"
+              @change="inputChange"
               maxlength="200"
               show-word-limit
               type="textarea"
@@ -34,6 +35,7 @@
               size="medium"
               type="primary"
               @click="sendComment"
+              :disabled="disBtn"
             >评论</el-button>
           </div>
         </div>
@@ -44,6 +46,7 @@
     </div>
     <!-- 滑倒顶部 -->
     <el-button
+    ref="floatBtn"
         style="color:blue"
         :class="['float-button',toTopBtn?'top':'']"
         circle
@@ -65,6 +68,7 @@ export default {
   },
   data() {
     return {
+      comment:'comment',
       toTopBtn: false, //滑倒顶部按钮 变量
       message: "",
       newsUrl: "",
@@ -72,7 +76,8 @@ export default {
       commentValue: "",
       btnShow: false,
       replyList: [],
-      sendLoading:false
+      sendLoading:false,
+      headUrl:''
         // {
         //   name: "GitYiM",
         //   content: "评论的内容哦哈哈哈哈哈",
@@ -80,14 +85,27 @@ export default {
         // }]
     };
   },
+  computed:{
+    disBtn: function() {
+      if(this.commentValue.length>0){
+        return false
+      }else{
+        return true
+      }
+    }
+  },
   methods: {
     showBtn() {
       this.btnShow = true;
     },
-    hideBtn() { 
+    hideBtn () {
+      console.log(event)
+      // console.log(event.offsetY) 
       this.btnShow = false;
     },
-    
+    inputChange (value) {
+      console.log(value)
+    },
     //提交评论
     sendComment() {
       //
@@ -205,19 +223,35 @@ export default {
   created() {
     this.newsUrl = this.$route.query.newsUrl;
     this.newsId = this.$route.query.newsId;
+    this.headUrl = `http://q2lnakrj2.bkt.clouddn.com/head${this.$store.state.imageType}.jpeg`
     this.articleLoad();
     this.getComments();
   },
 
     mounted() {
-      window.addEventListener("scroll", this.getFromTop, false);
+      window.addEventListener("scroll", this.getFromTop, false)
+      // console.log(this.$refs.comment)
     }
-
+    // beforeRouteEnter(to,from,next){
+    //   console.log(to.query)
+    //   console.log(from)
+    //   if(to.query.comment){
+    //       next(vm => {
+    //         vm.$nextTick(function(){
+    //           console.log('？？？！！！')
+    //           console.log(document.getElementById('J_article'))
+    //           document.documentElement.scrollTop = vm.$refs.comment.getBoundingClientRect().top
+    //         })
+    //       })
+    //   }
+    //   next()   
+    // }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "~@/styles/mixin.scss";
+
 .comment-container {
   min-height: 300px;
   position: relative;
@@ -228,7 +262,7 @@ export default {
     text-align: center;
     padding: 20px 0px 5px 0px;
   }
-  .comment-form {
+  .comment-form { 
     position: relative;
     margin: 20px 0;
     padding: 15px 20px;
@@ -277,4 +311,5 @@ export default {
     }
 </style>
 <style lang="scss">
+
 </style>

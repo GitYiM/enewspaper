@@ -1,5 +1,16 @@
 import request from '@/utils/request'
 
+
+//注册新用户
+
+export function createUser(params){
+    return request({
+        url:`/ydkb/news/register`,
+        method:'get',
+        params
+    })
+}
+
 //获取头条新闻
 export function getHeadlineList(params){
     return request({
@@ -69,5 +80,17 @@ export function getComments (params) {
         url: '/ydkb/news/comment/get',
         method: 'get',
         params
+    })
+}
+
+//获取地理位置
+export function getPosition (location) {
+    return request ({
+        url:'https://restapi.amap.com/v3/geocode/regeo',
+        method:'get',
+        params:{
+            location:location,
+            key:'c88774c335ce0173117f5f0288f2f0a6'
+        }
     })
 }

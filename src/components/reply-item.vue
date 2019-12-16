@@ -1,7 +1,7 @@
 <template>
   <div class="comment-list-item">
     <div class="item-avatar-box">
-      <el-avatar shape="circle" :size="35" src="http://hbimg.huabanimg.com/f6ee1b095215b8c2955fd07e56e2739b2671cd3579f0d-5feCNB_fw658"></el-avatar>
+      <el-avatar shape="circle" :size="35" :src="headUrl"></el-avatar>  
     </div>
     <div class="item-content-box">
       <div class="meta-box">{{replyInfo.name}}</div>
@@ -39,8 +39,13 @@ export default {
   data() {
     return {
       liked: false,
-      acclainmNum:0
+      acclainmNum:0,
     };
+  },
+  computed:{
+    headUrl:function(){
+      return `http://q2lnakrj2.bkt.clouddn.com/head${this.replyInfo.imageType}.jpeg`
+    }
   },
   methods: {
     likeNumChange(value){
@@ -75,7 +80,7 @@ export default {
   created() {
     //初始化点赞数量
     // console.log(this.replyInfo)
-    this.acclainmNum = this.replyInfo.acclaimCount 
+    this.acclainmNum = this.replyInfo.acclaimCount
     //初始化点赞按钮状态
     if(this.replyInfo.acclaimStatus==1){
         this.liked = true

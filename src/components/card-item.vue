@@ -35,8 +35,8 @@
 
                 </div>
             </el-col>
-            <el-col :span="5" class="right-img" >
-                <el-image class="imgItem" :src="itemData.thumbnail_pic_s" lazy alt="新闻图片" />
+            <el-col v-if="itemData.thumbnail_pic_s" :span="5" class="right-img" >
+                <el-image  class="imgItem" :src="itemData.thumbnail_pic_s" lazy alt="新闻图片" />
             </el-col>
         </el-card>
 
@@ -209,6 +209,17 @@ import  { distate,likeNumUpdate,getacclaim,collectNews }  from '@/api/api'
                         newsId: this.itemData.uniquekey
                     }
                 })
+            },
+            toComment () {
+                this.$router.push({
+                    path:'/about',
+                    query:{
+                        newsUrl : this.itemData.url,
+                        newsId: this.itemData.uniquekey
+                    },
+                    hash:'#comment'
+                })
+
             }
         },
         created () {

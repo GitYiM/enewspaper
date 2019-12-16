@@ -32,6 +32,10 @@ let _this
                         clickId:'headline'
                     },
                     {
+                        name:'农业',
+                        clickId:'agri'
+                    },
+                    {
                         name:'社会',
                         clickId:'social'
                     },
@@ -69,7 +73,7 @@ let _this
                     }
                 ],
                 activeId:'headline',
-                cacheList:"Headline,Health,Inland,International,Military,Pe,Science,Social,Car,Finance"
+                cacheList:"Headline,Health,Inland,International,Military,Pe,Science,Social,Car,Finance,Agri"
             }
         },
         methods:{
@@ -81,6 +85,14 @@ let _this
                           _this.activeId = click_id
                          _this.$router.push({
                             path:`headline`
+                        })
+                    }
+                    break
+                     case 'agri': {
+                       
+                        _this.activeId = click_id
+                        _this.$router.push({
+                            path:'agri'
                         })
                     }
                     break

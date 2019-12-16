@@ -15,7 +15,7 @@ listLoad.loadMore = function (fn, headlist, nomore) {
 }
 
 function listenFunction(fn) {
-        throttle(function() {
+       return  throttle(function () {
             let fromTopHeight = document.body.scrollTop || document.documentElement.scrollTop 
             let viewHeight = document.documentElement.clientHeight || document.body.clientHeight
             let totalHeight = document.documentElement.scrollHeight || document.body.scrollHeight
@@ -31,35 +31,28 @@ function listenFunction(fn) {
 
 listLoad.listenScroll = function (fn) {
     console.log('执行')
-    // window.onscroll= function() {
-    //     let fromTopHeight = document.body.scrollTop || document.documentElement.scrollTop 
-    //     let viewHeight = document.documentElement.clientHeight || document.body.clientHeight
-    //     let totalHeight = document.documentElement.scrollHeight || document.body.scrollHeight
-    //     if(fromTopHeight+viewHeight>= totalHeight){
-    //         fn()
-    //         console.log('加载更多')
-    //     }else{
-    //         console.log('条件不满足')
-    //     }
-    //     console.log('监听')
-    // }
-    window.addEventListener('scroll', throttle(function() {
+    window.addEventListener('scroll',  throttle(function () {
         let fromTopHeight = document.body.scrollTop || document.documentElement.scrollTop 
         let viewHeight = document.documentElement.clientHeight || document.body.clientHeight
         let totalHeight = document.documentElement.scrollHeight || document.body.scrollHeight
-        if(fromTopHeight+viewHeight>= totalHeight){
-            fn()
-            console.log('加载更多')
-        }else{
-            console.log('条件不满足')
-        }
-        console.log('监听')
+        if(fromTopHeight+viewHeight>= totalHeight-10){
+            // console.log('加载更多0')
+            // setTimeout(function(){
+                
+            //     if(fromTopHeight+viewHeight>= totalHeight){
+            //         console.log('加载更多1')
+            //         fn()
+            //     }
+            // },1000)
+            // fn()
+        }else{}
+
     },300),false)
 }
 
-// listLoad.removeListenScroll = function (fn) {
-//     window.removeEventListener('scroll',listenFunction(fn),false)
-// }
+listLoad.removeListenScroll = function (fn) {
+    window.removeEventListener('scroll',listenFunction(fn),false)
+}
  
 
 export default listLoad

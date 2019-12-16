@@ -6,7 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     //userState
-    userUniId:'96568b78-058c-4fb7-b58d-856bd70aaca5',
+    userUniId:'bbff323a-1b54-476c-b3ab-3ef872dae3f5',
+    userName:'游客',
+    imageType:1,
     recommendType:'0',
 
     //viewState

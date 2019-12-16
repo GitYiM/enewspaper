@@ -4,7 +4,7 @@
       <div class="main-container">
           <el-col :span="17">
             <div class="left-content-list" v-loading="loading" element-loading-text="拼命加载中...." element-loading-spinner="el-icon-loading">
-                <card-item :href="item.url" v-for="(item,index) in HeadLists" :key="index"  :itemData="item" class="card-item"></card-item>
+                <card-item  :href="item.url" v-for="(item,index) in HeadLists" :key="index" :itemData="item" class="card-item"></card-item>
             </div>
           </el-col>
           <el-col :span="7">
@@ -24,7 +24,7 @@ import { throttle } from '@/utils/throttle.js'
 import listLoad from '@/utils/listLoad.js'
 let _this
 export default {
-    name:'Health',
+    name:'Agri',
     components:{
         cardItem
     },
@@ -35,9 +35,9 @@ export default {
         }
     },
     methods: {
-        forSocialNews () {
+        forAgriNews () {
             getOtherNews ({
-                type: 'jiankang',
+                type: 'nongye',
                 userUniqueKey: _this.$store.state.userUniId,
                 recommendType: _this.$store.state.recommendType
             }).then(res => {
@@ -48,7 +48,7 @@ export default {
         },
          loadMore: function () {
             getOtherNews({
-                type: 'jiankang',
+                 type: 'nongye',
                 userUniqueKey: _this.$store.state.userUniId,
                 recommendType: _this.$store.state.recommendType
             })
@@ -62,12 +62,10 @@ export default {
     },
     created () {
         _this = this
-        _this.forSocialNews()
-         listLoad.listenScroll(_this.loadMore)
+        _this.forAgriNews()
+        listLoad.listenScroll(_this.loadMore)
+
     },
-    activated () {
-        console.log('health actived')
-    }
 } 
 </script>
 
@@ -88,7 +86,7 @@ export default {
         padding: 20px 0;
          @include clearfix;
         height: 100%;
-       .left-content-list{
+        .left-content-list{
             min-height: 200px;
             z-index: -1;
         }
