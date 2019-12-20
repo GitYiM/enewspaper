@@ -12,8 +12,7 @@ module.exports = {
                 changeOrigin: true,
                 pathRewrite: {
                     '^/':''
-                },
-                secure:false
+                }
             }
         }
     },

@@ -2,6 +2,7 @@
   <div>
     <!-- 新闻html -->
     <div  v-html="message"></div>
+    <el-button v-if="!isMobile" id="backBtn" circle type="success" icon="el-icon-back" size="small" @click="back">回到首页</el-button>
     <!-- 评论添加部分 -->
     <div  class="comment-container"> 
       <div class="title" id='comment' >评论</div>
@@ -46,6 +47,7 @@
     </div>
     <!-- 滑倒顶部 -->
     <el-button
+    v-if="!isMobile"
     ref="floatBtn"
         style="color:blue"
         :class="['float-button',toTopBtn?'top':'']"
@@ -61,6 +63,7 @@ import axios from "axios";
 import replyItem from "@/components/reply-item.vue";
 import utils from "@/utils/normalUtils.js";
 import md5 from "js-md5";
+import { mapState } from 'vuex';
 export default {
   name: "About",
   components: {
@@ -77,7 +80,8 @@ export default {
       btnShow: false,
       replyList: [],
       sendLoading:false,
-      headUrl:''
+      headUrl:'',
+      // isMobile:false
         // {
         //   name: "GitYiM",
         //   content: "评论的内容哦哈哈哈哈哈",
@@ -86,15 +90,21 @@ export default {
     };
   },
   computed:{
+    ...mapState(['isMobile']),
     disBtn: function() {
       if(this.commentValue.length>0){
         return false
       }else{
         return true
       }
-    }
+    },
   },
   methods: {
+    back () {
+      this.$router.push({
+        path:'/'
+      })
+    },
     showBtn() {
       this.btnShow = true;
     },
@@ -177,7 +187,8 @@ export default {
         lock: true
       });
       axios({
-        url: this.newsUrl
+        url: this.newsUrl,
+        method:'get'
       })
         .then(res => {
           this.message = res.data;
@@ -308,6 +319,11 @@ export default {
     .top{
       bottom: 100px;
       opacity: 1;
+    }
+    #backBtn{
+      position: fixed;
+      top:10px;
+      left: 200px;
     }
 </style>
 <style lang="scss">

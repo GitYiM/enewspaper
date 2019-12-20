@@ -13,7 +13,8 @@ export default new Vuex.Store({
 
     //viewState
     activeId :'headline',
-
+    //visit status
+    isMobile:false
     
   },
   getters: { 
@@ -30,6 +31,9 @@ export default new Vuex.Store({
       if(state.activeId != id){
         state.activeId = id
       }
+    },
+    setMobileStatus: function (state, status) {
+      state.isMobile = status
     }
   }, 
   //可以放异步请求

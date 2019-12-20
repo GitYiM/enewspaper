@@ -7,11 +7,27 @@
                 </ul>
             </nav>
         </div>
-      <transition name="fade-transform"  mode="out-in">
-          <keep-alive :include="cacheList">
-                <router-view  />
-          </keep-alive>
-        </transition>
+        <div class="content-container">
+            <el-col :span="16">
+                <transition name="fade-transform"  mode="out-in">
+                    <keep-alive :include="cacheList">
+                            <router-view  />
+                    </keep-alive>
+                </transition>
+            </el-col>
+            <el-col :span="8">
+                <div class="right-container">
+                    <el-card shadow="hover" class="app-code" style="width:80%;margin:auto;">
+                        <img src="http://q2lnakrj2.bkt.clouddn.com/app.png" alt="app二维码">
+                        <div style="line-height:30px;font-weight:600;">
+                            扫一扫，获取你的易得快报APP
+                        </div>
+                    </el-card>
+                </div>
+            </el-col>
+        </div>
+      
+        
         <!-- <transition name="fade-transform"  mode="out-in">
              <router-view v-if="!$route.meta.keepAlive" :key="varkey"/>>
         </transition> -->
@@ -36,16 +52,16 @@ let _this
                         clickId:'agri'
                     },
                     {
+                        name:'健康',
+                        clickId:'health'
+                    },
+                    {
                         name:'社会',
                         clickId:'social'
                     },
                     {
                         name:'国内',
                         clickId:'inland'
-                    },
-                    {
-                        name:'健康',
-                        clickId:'health'
                     },
                     {
                         name:'国际',
@@ -173,11 +189,13 @@ let _this
 </script>
 
 <style lang="scss" scoped>
-    // @import '~@/styles/mixin.scss';
+    @import '~@/styles/mixin.scss';
     .dashboard-container{
         position: relative;
-        // @include clearfix;
+        
+        
         .dash-container{
+            
             width: 100%;
             height: 3rem;
             position: relative;
@@ -205,6 +223,24 @@ let _this
                 }
             }
         }
+        }
+        .content-container{
+            max-width: 1080px;
+            margin: auto;
+        }
+        .right-container{
+            width: 100%;
+            padding-top: 20px;
+            .app-code{
+                @include clearfix;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                img{
+                    width: 60%;
+                    min-width: 100px;
+                }
+            }
         }
         
     }

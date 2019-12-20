@@ -12,6 +12,7 @@
 <script>
 import utils from '@/utils/normalUtils.js'
 import { createUser, getPosition } from '@/api/api.js'
+import { mapMutations } from 'vuex';
 let _this;
 export default {
   data () {
@@ -27,12 +28,19 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setMobileStatus']),
     test:function({name}) { 
       console.log(name)
+    },
+    isMobile(){
+      let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i) 
+      this.setMobileStatus(flag);
     }
   },
   created () {
     _this = this
+    //判断客户端类型
+    _this.isMobile()
     //第一次进入网页注册新用户
     _this.hasUserId = window.localStorage.getItem('userId')
 
@@ -68,7 +76,7 @@ export default {
        imageType:imageType,
        latitude:lati,
        longitude:longi
-     })
+    })
       window.localStorage.setItem('userId',userId)
       window.localStorage.setItem('userName',userName)
       window.localStorage.setItem('imageType',imageType)
@@ -81,6 +89,7 @@ export default {
        _this.$store.state.userName = window.localStorage.getItem('userName')
        _this.$store.state.imageType = window.localStorage.getItem('imageType')
     }
+
   },
 }
 </script>

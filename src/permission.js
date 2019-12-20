@@ -5,7 +5,7 @@ import 'nprogress/nprogress.css' //progress bar style
 
 
 router.beforeEach((to,from,next) => {
-    // NProress.start()
+    NProress.start()
     //about页面和首页的颜色切换
     if(to.path == '/about'){
         const html =  document.getElementsByTagName('html')[0]

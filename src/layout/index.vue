@@ -158,8 +158,12 @@ export default {
       }
     },
     toConnect () {
-      _this.$router.push({
-        path:"connectus"
+      // _this.$router.push({
+      //   path:"connectus"
+      // })
+      this.$message({
+        type:"warning",
+        message:'该板块暂未开放'
       })
     },
     toDashboard() {

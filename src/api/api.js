@@ -1,8 +1,9 @@
 import request from '@/utils/request'
 
 
-//注册新用户
 
+
+//注册新用户
 export function createUser(params){
     return request({
         url:`/ydkb/news/register`,

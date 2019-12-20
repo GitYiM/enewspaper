@@ -2,16 +2,9 @@
   <div class="headline-wrapper">
     <div class="dashboard-main-wrapper">
       <div class="main-container">
-          <el-col :span="17">
             <div class="left-content-list" v-loading="loading" element-loading-text="拼命加载中...." element-loading-spinner="el-icon-loading">
                 <card-item :href="item.url" v-for="(item,index) in HeadLists" :key="index"  :itemData="item" class="card-item"></card-item>
             </div>
-          </el-col>
-          <el-col :span="7">
-                <div class="right-extra-content">
-                    <!-- <el-button @click="forOtherNews">测试</el-button> -->
-                </div>
-          </el-col>
       </div>
     </div>
   </div>
