@@ -1,5 +1,5 @@
+[易得快报应用访问地址](http://121.36.40.108/#/dashboard/headline)
 # easynews
-[访问地址](http://121.36.40.108/#/dashboard/headline)
 ## Project setup
 ```
 npm install
